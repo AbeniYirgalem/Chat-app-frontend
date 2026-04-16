@@ -30,12 +30,18 @@ export const useAuthStore = create((set, get) => ({
     set({ isSigningUp: true });
     try {
       const res = await axiosInstance.post("/auth/signup", data);
-      toast.success(
+      const isSuccess = res.data?.success === true;
+      const message =
         res.data?.message ||
-          "A verification email has been sent. Please check your inbox.",
-      );
+        "Verification email sent. Please check your email.";
 
-      return { success: true, message: res.data?.message };
+      if (!isSuccess) {
+        toast.error("Unexpected signup response. Please try again.");
+        return { success: false, message: "Unexpected signup response" };
+      }
+
+      toast.success(message);
+      return { success: true, message };
     } catch (error) {
       const message =
         error.response?.data?.message ||
