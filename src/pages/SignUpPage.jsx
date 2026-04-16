@@ -8,7 +8,7 @@ import {
   UserIcon,
   LoaderIcon,
 } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 function SignUpPage() {
   const [formData, setFormData] = useState({
@@ -16,18 +16,14 @@ function SignUpPage() {
     email: "",
     password: "",
   });
-  const [successMessage, setSuccessMessage] = useState("");
+  const navigate = useNavigate();
   const { signup, isSigningUp } = useAuthStore();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSuccessMessage("");
     const result = await signup(formData);
     if (result?.success) {
-      setSuccessMessage(
-        result.message ||
-          "A verification email has been sent. Please check your inbox.",
-      );
+      navigate("/login", { replace: true });
     }
   };
 
@@ -116,12 +112,6 @@ function SignUpPage() {
                       "Create Account"
                     )}
                   </button>
-
-                  {successMessage && (
-                    <p className="text-center text-sm text-emerald-400">
-                      {successMessage}
-                    </p>
-                  )}
                 </form>
 
                 <div className="mt-6 text-center">
