@@ -63,4 +63,5 @@ npm run preview
 ## Notes
 
 - The app expects a backend that exposes `/auth` endpoints and a Socket.IO server aligned with the URLs above.
+- Backend repository: https://github.com/AbeniYirgalem/Chat-app-backend
 - Sounds for keyboard input are located under [public/sounds](public/sounds).
